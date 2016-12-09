@@ -15,5 +15,6 @@
         <MediaElement x:Name="soundalarm" Source="Assets\alarm.wav" />
         <TextBlock x:Name="tb_hour" HorizontalAlignment="Left" Margin="87,200,0,0" TextWrapping="Wrap" Text="時間" VerticalAlignment="Top" FontSize="36"/>
         <TextBlock x:Name="tb_minute" HorizontalAlignment="Left" Margin="227,200,0,0" TextWrapping="Wrap" Text="分" VerticalAlignment="Top" FontSize="36"/>
+        <ToolTip x:Name="tol_balloon" Content="0時間0分では開始できません" HorizontalAlignment="Left" Margin="102,326,0,0" VerticalAlignment="Top" Visibility="Collapsed"/>
     </Grid>
 </Page>

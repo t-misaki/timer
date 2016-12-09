@@ -10,6 +10,9 @@ Public NotInheritable Class MainPage
     Private flg_Pause  As Boolean = False '一時停止フラグ
     Private mdAlarm As New MessageDialog ("タイマー終了","タイマー") 'お知らせダイアログ
 
+    Public MainPage()
+
+
     Private Async Sub btn_start_Click(sender As Object, e As RoutedEventArgs) Handles btn_start.Click
         'Dim uri = New Uri("ms-appx:///Assets/alarm.wav")
         'Dim file = Await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(uri)
@@ -18,52 +21,54 @@ Public NotInheritable Class MainPage
         'Dim media = New MediaElement()
         'media.SetSource(stream, file.ContentType)
 
-        soundalarm.Play()
+        If tp_time.Time.Hours = 0 And tp_time.Time.Minutes = 0 Then
+            tol_balloon.Visibility = Visibility.Visible
+        Else
+            'フラグ設定
+            flg_Cancel = False
 
+            'オブジェクトの可視性設定
+            tol_balloon.Visibility = Visibility.Collapsed
+            Call VisibleSwitch (flg_Cancel)
 
-        'フラグ設定
-        flg_Cancel = False
+            'ボタンに表示されている文字が "開始" の場合
+            If btn_start.Content = "開始" Then
+                'Timerの設定をする
+                Call TimerSet()
 
-        'オブジェクトの可視性設定
-        Call VisibleSwitch (flg_Cancel)
+                '一時停止でない場合
+                If flg_Pause = False Then
+                    '############################# debug用 #############################
+                    '変数 dTime にTimePickerの時間を代入
+    '                dTime = New DateTime(2000,01,01,tp_time.Time.Hours,tp_time.Time.Minutes,tp_time.Time.Seconds)
+                    dTime = New DateTime(2000,01,01,0,0,3)
+                End If
 
-        'ボタンに表示されている文字が "開始" の場合
-        If btn_start.Content = "開始" Then
-            'Timerの設定をする
-            Call TimerSet()
+                '残り1時間以上の場合は "時：分：秒" の形式で残り時間を表示
+                If tp_time.Time.Hours <> 0 Then
+                    tb_countdown.FontSize = 80
+                    tb_countdown.Text = (dTime.ToString("HH:mm:ss"))
+                '残り1時間を切った場合は分：秒の形式で残り時間を表示
+                Else
+                    tb_countdown.FontSize = 100
+                    tb_countdown.Text = (dTime.ToString("mm:ss"))
+                End If
 
-            '一時停止でない場合
-            If flg_Pause = False Then
-                '############################# debug用 #############################
-                '変数 dTime にTimePickerの時間を代入
-'                dTime = New DateTime(2000,01,01,tp_time.Time.Hours,tp_time.Time.Minutes,tp_time.Time.Seconds)
-                dTime = New DateTime(2000,01,01,0,0,3)
+                'Timerを起動
+                disTimer.Start()
+
+                'ボタンの表示文字を "一時停止" に切り替えフラグを立てる
+                btn_start.Content = "一時停止"
+                flg_Pause = True
+
+            'ボタンに表示されている文字が "一時停止" の場合
+            Else If btn_start.Content = "一時停止" Then
+                'Timerを停止
+                disTimer.Stop()
+
+                'ボタンの表示文字を "開始" に切り替える
+                btn_start.Content = "開始"
             End If
-
-            '残り1時間以上の場合は "時：分：秒" の形式で残り時間を表示
-            If tp_time.Time.Hours <> 0 Then
-                tb_countdown.FontSize = 80
-                tb_countdown.Text = (dTime.ToString("HH:mm:ss"))
-            '残り1時間を切った場合は分：秒の形式で残り時間を表示
-            Else
-                tb_countdown.FontSize = 100
-                tb_countdown.Text = (dTime.ToString("mm:ss"))
-            End If
-
-            'Timerを起動
-            disTimer.Start()
-
-            'ボタンの表示文字を "一時停止" に切り替えフラグを立てる
-            btn_start.Content = "一時停止"
-            flg_Pause = True
-
-        'ボタンに表示されている文字が "一時停止" の場合
-        Else If btn_start.Content = "一時停止" Then
-            'Timerを停止
-            disTimer.Stop()
-
-            'ボタンの表示文字を "開始" に切り替える
-            btn_start.Content = "開始"
         End If
     End Sub
 
