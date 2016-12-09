@@ -8,11 +8,11 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" ManipulationMode="TranslateY">
+        <TextBlock x:Name="tb_countdown" Margin="10,113,10,0" TextWrapping="Wrap" Text="0" TextAlignment="Center" VerticalAlignment="Top" FontSize="100" Visibility="Collapsed" Height="150"/>
         <TimePicker x:Name="tp_time" HorizontalAlignment="Center" Margin="60,115,58,0" VerticalAlignment="Top" ClockIdentifier="24HourClock" Time="0:1:0" FontFamily="Segoe UI" FontSize="48"/>
         <Button x:Name="btn_start" Content="開始" HorizontalAlignment="Left" Margin="199,445,0,0" VerticalAlignment="Top" Height="100" Width="135"/>
         <Button x:Name="btn_cancel" Content="キャンセル" HorizontalAlignment="Left" Margin="30,446,0,0" VerticalAlignment="Top" Height="99" Width="135"/>
-        <TextBlock x:Name="tb_countdown" Margin="10,46,10,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" FontSize="48" Visibility="Visible" Width="340"/>
-        <MediaElement Name="soundalarm" Source="Assets/alarm.wav" />
+        <MediaElement x:Name="soundalarm" Source="Assets\alarm.wav" />
         <TextBlock x:Name="tb_hour" HorizontalAlignment="Left" Margin="87,200,0,0" TextWrapping="Wrap" Text="時間" VerticalAlignment="Top" FontSize="36"/>
         <TextBlock x:Name="tb_minute" HorizontalAlignment="Left" Margin="227,200,0,0" TextWrapping="Wrap" Text="分" VerticalAlignment="Top" FontSize="36"/>
     </Grid>
