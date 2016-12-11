@@ -10,19 +10,12 @@ Public NotInheritable Class MainPage
     Private flg_Pause  As Boolean = False '一時停止フラグ
     Private mdAlarm As New MessageDialog ("タイマー終了","タイマー") 'お知らせダイアログ
 
-    Public MainPage()
-
-
     Private Async Sub btn_start_Click(sender As Object, e As RoutedEventArgs) Handles btn_start.Click
-        'Dim uri = New Uri("ms-appx:///Assets/alarm.wav")
-        'Dim file = Await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(uri)
-        'Dim stream = Await file.OpenAsync(Windows.Storage.FileAccessMode.Read)
-
-        'Dim media = New MediaElement()
-        'media.SetSource(stream, file.ContentType)
-
+        '時間設定用TimePickerが0時間0分の場合
         If tp_time.Time.Hours = 0 And tp_time.Time.Minutes = 0 Then
+            'バルーンを表示
             tol_balloon.Visibility = Visibility.Visible
+        '時間設定用TimePickerが1分以上の場合
         Else
             'フラグ設定
             flg_Cancel = False
@@ -38,10 +31,8 @@ Public NotInheritable Class MainPage
 
                 '一時停止でない場合
                 If flg_Pause = False Then
-                    '############################# debug用 #############################
                     '変数 dTime にTimePickerの時間を代入
-    '                dTime = New DateTime(2000,01,01,tp_time.Time.Hours,tp_time.Time.Minutes,tp_time.Time.Seconds)
-                    dTime = New DateTime(2000,01,01,0,0,3)
+                    dTime = New DateTime(2000, 01, 01, tp_time.Time.Hours, tp_time.Time.Minutes, tp_time.Time.Seconds)
                 End If
 
                 '残り1時間以上の場合は "時：分：秒" の形式で残り時間を表示
@@ -149,8 +140,19 @@ Public NotInheritable Class MainPage
     End Sub
 
     Private Async Sub ShowDialog()
+        Dim dialogresult As ContentDialogResult 'ダイアログからの戻り値
+        
+        'アラーム音を再生
+        mediaElement.Play()
 
-        Await mdAlarm.ShowAsync()
+        'ダイアログを表示
+        dialogresult = Await contentDialog.ShowAsync()
+
+        'ダイアログの "閉じる" ボタンが押された場合
+        If dialogresult = ContentDialogResult.Primary Then
+            'アラーム音を停止
+            mediaElement.Stop()
+        End If
 
         'フラグ設定
         flg_Cancel = True
@@ -158,6 +160,5 @@ Public NotInheritable Class MainPage
 
         'オブジェクトの可視性設定
         Call VisibleSwitch(flg_Cancel)
-
     End Sub
 End Class

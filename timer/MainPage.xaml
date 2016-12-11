@@ -12,9 +12,10 @@
         <TimePicker x:Name="tp_time" HorizontalAlignment="Center" Margin="60,115,58,0" VerticalAlignment="Top" ClockIdentifier="24HourClock" Time="0:1:0" FontFamily="Segoe UI" FontSize="48"/>
         <Button x:Name="btn_start" Content="開始" HorizontalAlignment="Left" Margin="199,445,0,0" VerticalAlignment="Top" Height="100" Width="135"/>
         <Button x:Name="btn_cancel" Content="キャンセル" HorizontalAlignment="Left" Margin="30,446,0,0" VerticalAlignment="Top" Height="99" Width="135"/>
-        <MediaElement x:Name="soundalarm" Source="Assets\alarm.wav" />
         <TextBlock x:Name="tb_hour" HorizontalAlignment="Left" Margin="87,200,0,0" TextWrapping="Wrap" Text="時間" VerticalAlignment="Top" FontSize="36"/>
         <TextBlock x:Name="tb_minute" HorizontalAlignment="Left" Margin="227,200,0,0" TextWrapping="Wrap" Text="分" VerticalAlignment="Top" FontSize="36"/>
         <ToolTip x:Name="tol_balloon" Content="0時間0分では開始できません" HorizontalAlignment="Left" Margin="102,326,0,0" VerticalAlignment="Top" Visibility="Collapsed"/>
+        <MediaElement x:Name="mediaElement" Volume="1000" Source="Assets/alarm.mp3" AutoPlay="False" IsLooping="True"/>
+        <ContentDialog x:Name="contentDialog" Title="アラーム" Margin="20,253,20,203" PrimaryButtonText="閉じる" Content="　アラーム終了" AutomationProperties.PositionInSet="-1" />
     </Grid>
 </Page>
